@@ -3,142 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Donate to Help Gaza</title>
+  <title>The People of Gaza Need Your Help</title>
   <style>
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1594986403496-71b4b418fa9a'); /* Replace if needed */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
+      background-color: #f4f4f4;
       text-align: center;
-      padding: 30px;
+      padding: 40px;
     }
-
-    .container {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 10px;
-      max-width: 600px;
-      margin: auto;
-    }
-
     h1 {
-      font-size: 1.8em;
-      margin-bottom: 10px;
+      color: #b30000;
     }
-
-    #btcAddress {
-      width: 100%;
+    p {
       font-size: 18px;
-      text-align: center;
-      border: none;
-      background: transparent;
-      color: white;
+      max-width: 700px;
+      margin: 20px auto;
     }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
-      background-color: #f39c12;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-
-    #copyMsg {
-      margin-top: 10px;
-      color: lightgreen;
-    }
-
-    #thankYou {
+    .wallet {
+      margin-top: 30px;
       font-weight: bold;
-      color: #7FFF00;
-      margin-top: 20px;
-      display: none;
+      word-wrap: break-word;
     }
-
-    .lang-buttons button {
-      margin: 5px;
+    .qr {
+      margin: 20px 0;
     }
-
-    .social-share {
-      margin-top: 25px;
-    }
-
-    .social-share a {
-      margin: 0 8px;
-      color: white;
-      text-decoration: underline;
-    }
-
-    .footer {
-      margin-top: 20px;
+    footer {
+      margin-top: 50px;
       font-size: 14px;
-      color: #ccc;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 id="title">People in Gaza Need Your Help</h1>
-    <p id="message">Your donation can make a difference. Every satoshi counts.</p>
 
-    <p><strong>Bitcoin Wallet Address:</strong></p>
-    <input type="text" id="btcAddress" value="bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc" readonly />
-    <br />
-    <button onclick="copyAddress()" id="copyBtn">📋 Copy Wallet Address</button>
-    <div id="copyMsg"></div>
-    <div id="thankYou">❤️ Thank you for your kindness.</div>
+  <h1>The People of Gaza Need Your Help</h1>
 
-    <div class="lang-buttons">
-      🌍 Language:
-      <button onclick="setLang('en')">English</button>
-      <button onclick="setLang('ar')">العربية</button>
-      <button onclick="setLang('fr')">Français</button>
-      <button onclick="setLang('es')">Español</button>
-    </div>
+  <p>
+    Every day in Gaza, families struggle to survive under devastating conditions — lacking food, clean water, shelter, and safety.
+    <br><br>
+    Children are going to sleep hungry. Mothers are praying for medical care. Entire communities are caught in the crossfire of circumstances they cannot control.
+    <br><br>
+    Your donation, no matter how small, can make a real difference.
+    <br><br>
+    100% of all contributions go toward relief efforts, helping provide essential resources, hope, and dignity to those who need it most.
+    <br><br>
+    <strong>Stand with humanity. Stand with Gaza.</strong>
+  </p>
 
-    <div class="social-share">
-      <p>🔗 Share this page:</p>
-      <a href="#" onclick="share()">Facebook</a>
-      <a href="#" onclick="share()">Twitter</a>
-      <a href="#" onclick="share()">WhatsApp</a>
-    </div>
-
-    <div class="footer">
-      👁️ Visitors: <span id="visitorCount">Loading...</span><br />
-      Built with purpose. 100% of donations go directly.
-    </div>
+  <div class="qr">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc&size=200x200" alt="Bitcoin QR Code">
   </div>
 
-  <script>
-    const translations = {
-      en: {
-        title: "People in Gaza Need Your Help",
-        message: "Your donation can make a difference. Every satoshi counts.",
-        copyMsg: "✅ Address copied to clipboard!",
-        thankYou: "❤️ Thank you for your kindness.",
-        copyBtn: "📋 Copy Wallet Address"
-      },
-      ar: {
-        title: "الناس في غزة بحاجة إلى مساعدتك",
-        message: "تبرعك يمكن أن يحدث فرقًا. كل ساتوشي مهم.",
-        copyMsg: "✅ تم نسخ العنوان!",
-        thankYou: "❤️ شكرًا لك على لطفك.",
-        copyBtn: "📋 نسخ عنوان المحفظة"
-      },
-      fr: {
-        title: "Les gens à Gaza ont besoin de votre aide",
-        message: "Votre don peut faire la différence. Chaque satoshi compte.",
-        copyMsg: "✅ Adresse copiée !",
-        thankYou: "❤️ Merci pour votre gentillesse.",
-        copyBtn: "📋 Copier l'adresse Bitcoin"
-      },
-      es: {
-        title: "La gente en Gaza necesita tu ayuda",
-        message: "Tu donación puede marcar la diferencia.…
+  <div class="wallet">
+    BTC Address: <br>
+    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
+  </div>
+
+  <footer>
+    Built for good. No fees, no middlemen — just direct help.
+  </footer>
+
+</body>
+</html>

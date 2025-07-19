@@ -7,100 +7,152 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background: url('https://i.imgur.com/C9vD1Wx.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       text-align: center;
-      padding: 40px;
+      padding: 30px 15px;
+      margin: 0;
     }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 30px 15px;
+      border-radius: 12px;
+      max-width: 900px;
+      margin: auto;
+    }
+
     h1 {
-      color: #b30000;
+      color: #ffcccc;
+      font-size: 28px;
+      margin-bottom: 20px;
     }
+
     p {
-      font-size: 18px;
+      font-size: 16px;
       max-width: 700px;
-      margin: 20px auto;
+      margin: 15px auto;
+      line-height: 1.6;
     }
-    .qr {
-      margin: 20px 0;
-    }
+
     .wallet {
       margin-top: 30px;
       font-weight: bold;
-      word-wrap: break-word;
+      word-break: break-word;
       font-size: 16px;
+      color: #fff;
     }
-    .stats {
+
+    .qr {
+      margin: 30px 0;
+    }
+
+    .qr img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    #donation-stats {
       margin-top: 40px;
-      font-size: 16px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid #eee;
+      border-radius: 8px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    #donation-stats h2 {
+      color: #ffcccc;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #ffaaaa;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
     footer {
       margin-top: 50px;
       font-size: 14px;
-      color: #888;
+      color: #ddd;
+    }
+
+    .logo {
+      max-width: 250px;
+      margin: 0 auto 25px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 15px;
+      }
+      .logo {
+        max-width: 180px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>The People of Gaza Need Your Help</h1>
+  <div class="overlay">
+    
+    <div class="logo">
+      <img src="https://i.imgur.com/FkmuAmN.png" alt="Campaign Logo" style="width:100%; height:auto;" />
+    </div>
 
-  <p>
-    Every day in Gaza, families struggle to survive under devastating conditions — lacking food, clean water, shelter, and safety.
-    <br><br>
-    Children are going to sleep hungry. Mothers are praying for medical care. Entire communities are caught in the crossfire of circumstances they cannot control.
-    <br><br>
-    Your donation, no matter how small, can make a real difference.
-    <br><br>
-    100% of all contributions go toward relief efforts, helping provide essential resources, hope, and dignity to those who need it most.
-    <br><br>
-    <strong>Stand with humanity. Stand with Gaza.</strong>
-  </p>
+    <h1>The People of Gaza Need Your Help</h1>
 
-  <div class="qr">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc&size=200x200" alt="Bitcoin QR Code">
+    <p>
+      Every day in Gaza, families struggle to survive under devastating conditions — lacking food, clean water, shelter, and safety.
+      <br><br>
+      Children are going to sleep hungry. Mothers are praying for medical care. Entire communities are caught in the crossfire of circumstances they cannot control.
+      <br><br>
+      Your donation, no matter how small, can make a real difference.
+      <br><br>
+      100% of all contributions go toward relief efforts, helping provide essential resources, hope, and dignity to those who need it most.
+      <br><br>
+      <strong>Stand with humanity. Stand with Gaza.</strong>
+    </p>
+
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc&size=200x200" alt="Bitcoin QR Code">
+    </div>
+
+    <div class="wallet">
+      BTC Address:<br>
+      <strong>bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</strong>
+    </div>
+
+    <div id="donation-stats">
+      <h2>Donation Transparency</h2>
+      <p>
+        All donations go directly to this Bitcoin wallet.
+      </p>
+      <p>
+        You can verify every transaction live on the blockchain:
+        <br>
+        <a href="https://blockstream.info/address/bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc" target="_blank">View Wallet on Blockstream Explorer</a>
+      </p>
+      <p>
+        Your contribution is instantly visible, transparent, and secure.
+      </p>
+    </div>
+
+    <footer>
+      Built for good. No fees, no middlemen — just direct help.
+    </footer>
+
   </div>
-
-  <div class="wallet">
-    BTC Address: <br>
-    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
-  </div>
-
-  <div class="stats">
-    <h2>Live Donation Stats</h2>
-    <p>Total Received: <span id="totalReceived">Loading...</span></p>
-    <p>Current Balance: <span id="balance">Loading...</span></p>
-    <p>Transactions: <span id="txCount">Loading...</span></p>
-    <p id="error" style="color:red;"></p>
-  </div>
-
-  <footer>
-    Built for good. No fees, no middlemen — just direct help.
-  </footer>
-
-  <script>
-    const btcAddress = "bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc";
-    const apiUrl = https://mempool.space/api/address/${btcAddress};
-    const proxyUrl = https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)};
-
-    fetch(proxyUrl)
-      .then(response => response.json())
-      .then(data => {
-        const parsedData = JSON.parse(data.contents);
-        const received = (parsedData.chain_stats.funded_txo_sum / 1e8).toFixed(8);
-        const balance = ((parsedData.chain_stats.funded_txo_sum - parsedData.chain_stats.spent_txo_sum) / 1e8).toFixed(8);
-        const txCount = parsedData.chain_stats.tx_count;
-
-        document.getElementById("totalReceived").innerText = ${received} BTC;
-        document.getElementById("balance").innerText = ${balance} BTC;
-        document.getElementById("txCount").innerText = txCount;
-      })
-      .catch(error => {
-        console.error("Error fetching Bitcoin stats:", error);
-        document.getElementById("error").innerText = "Unable to load live stats at the moment.";
-        document.getElementById("totalReceived").innerText = "0 BTC";
-        document.getElementById("balance").innerText = "0 BTC";
-        document.getElementById("txCount").innerText = "0";
-      });
-  </script>
 
 </body>
 </html>

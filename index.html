@@ -10,45 +10,43 @@
       background-color: #f4f4f4;
       text-align: center;
       padding: 40px;
-      color: #222;
     }
     h1 {
       color: #b30000;
-      margin-bottom: 20px;
     }
     p {
       font-size: 18px;
       max-width: 700px;
       margin: 20px auto;
-      line-height: 1.6;
     }
     .wallet {
       margin-top: 30px;
       font-weight: bold;
       word-wrap: break-word;
-      font-size: 18px;
     }
     .qr {
       margin: 20px 0;
-    }
-    .stats {
-      background: #fff;
-      margin-top: 30px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .stats p {
-      margin: 10px 0;
-      font-size: 16px;
     }
     footer {
       margin-top: 50px;
       font-size: 14px;
       color: #888;
+    }
+    .stats {
+      margin-top: 40px;
+      font-size: 18px;
+      background-color: #fff;
+      padding: 20px;
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .stats div {
+      margin-bottom: 10px;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -74,15 +72,17 @@
 
   <div class="wallet">
     BTC Address: <br>
-    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
+    <span id="btc-address">bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</span>
+    <br>
+    <button onclick="copyBTC()">📋 Copy Address</button>
   </div>
 
   <div class="stats">
     <h2>Live Donation Stats</h2>
-    <p><strong>Total Received:</strong> <span id="totalReceived">Loading...</span></p>
-    <p><strong>Current Balance:</strong> <span id="balance">Loading...</span></p>
-    <p><strong>Transactions:</strong> <span id="txCount">Loading...</span></p>
-    <p id="error" style="color:red;"></p>
+    <div>Total Received: <span id="totalReceived">Loading...</span></div>
+    <div>Current Balance: <span id="balance">Loading...</span></div>
+    <div>Transactions: <span id="txCount">Loading...</span></div>
+    <div class="error" id="error"></div>
   </div>
 
   <footer>
@@ -94,7 +94,7 @@
 
     async function fetchBTCStats() {
       try {
-        const res = await fetch(https://blockstream.info/api/address/${btcAddress});
+        const res = await fetch(https://corsproxy.io/?https://blockstream.info/api/address/${btcAddress});
         const data = await res.json();
 
         const stats = data.chain_stats || {
@@ -120,6 +120,13 @@
         document.getElementById("balance").innerText = "0 BTC";
         document.getElementById("txCount").innerText = "0";
       }
+    }
+
+    function copyBTC() {
+      const text = document.getElementById("btc-address").innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Bitcoin address copied!");
+      });
     }
 
     fetchBTCStats();

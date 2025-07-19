@@ -73,6 +73,8 @@
     BTC Address:<br>
     bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
   </div>
+  <button onclick="copyAddress()">📋 Copy Address</button>
+<p id="copyMsg" style="color: green;"></p>
   
 
   <div style="margin-top: 30px;">
@@ -85,6 +87,17 @@
   <footer>
     Built for good. No fees, no middlemen — just direct help.
   </footer>
-
+<script>
+  function copyAddress() {
+    const address = document.getElementById("btcAddress").innerText;
+    navigator.clipboard.writeText(address).then(() => {
+      document.getElementById("copyMsg").innerText = "✅ Address copied to clipboard!";
+      setTimeout(() => {
+        document.getElementById("copyMsg").innerText = "";
+      }, 3000);
+    });
+  }
+</script>
+  
 </body>
 </html>

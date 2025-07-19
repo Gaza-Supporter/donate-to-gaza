@@ -3,45 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Help Gaza - Bitcoin Donations</title>
+  <title>Donate to Help Gaza</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url('https://yourusername.github.io/your-repo-name/background.jpg');
+      background-image: url('https://images.unsplash.com/photo-1594986403496-71b4b418fa9a'); /* Replace if needed */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       color: white;
+      text-align: center;
+      padding: 30px;
     }
 
-    .overlay {
-      background: rgba(0, 0, 0, 0.7);
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
       padding: 30px;
       border-radius: 10px;
-      max-width: 700px;
-      margin: 50px auto;
-      text-align: center;
+      max-width: 600px;
+      margin: auto;
     }
 
-    h1, h2 {
-      margin-bottom: 20px;
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
     }
 
     #btcAddress {
-      font-size: 20px;
-      word-wrap: break-word;
+      width: 100%;
+      font-size: 18px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      color: white;
     }
 
     button {
+      padding: 10px 20px;
+      font-size: 16px;
       margin-top: 10px;
-      padding: 10px 15px;
-      border: none;
+      cursor: pointer;
       background-color: #f39c12;
       color: white;
-      font-size: 16px;
+      border: none;
       border-radius: 5px;
-      cursor: pointer;
     }
 
     #copyMsg {
@@ -49,78 +55,90 @@
       color: lightgreen;
     }
 
-    .thank-you {
-      margin-top: 25px;
+    #thankYou {
       font-weight: bold;
       color: #7FFF00;
+      margin-top: 20px;
+      display: none;
     }
 
-    .lang-toggle {
+    .lang-buttons button {
+      margin: 5px;
+    }
+
+    .social-share {
       margin-top: 25px;
     }
 
-    .lang-toggle button {
-      margin: 5px;
+    .social-share a {
+      margin: 0 8px;
+      color: white;
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <h1 id="title">People in Gaza need your help</h1>
-    <p id="message">Every satoshi makes a difference. Your support helps save lives. Please donate what you can today.</p>
+  <div class="container">
+    <h1 id="title">People in Gaza Need Your Help</h1>
+    <p id="message">Your donation can make a difference. Every satoshi counts.</p>
 
-    <h2 id="btcTitle">Bitcoin Donation Address:</h2>
-    <p id="btcAddress">bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</p>
-
+    <p><strong>Bitcoin Wallet Address:</strong></p>
+    <input type="text" id="btcAddress" value="bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc" readonly />
+    <br />
     <button onclick="copyAddress()" id="copyBtn">📋 Copy Wallet Address</button>
-    <p id="copyMsg"></p>
-    <p class="thank-you" id="thankYou">❤️ Thank you for supporting Gaza.</p>
+    <div id="copyMsg"></div>
+    <div id="thankYou">❤️ Thank you for your kindness.</div>
 
-    <div class="lang-toggle">
-      🌍 <strong>Select Language:</strong><br />
+    <div class="lang-buttons">
+      🌍 Language:
       <button onclick="setLang('en')">English</button>
       <button onclick="setLang('ar')">العربية</button>
       <button onclick="setLang('fr')">Français</button>
       <button onclick="setLang('es')">Español</button>
     </div>
+
+    <div class="social-share">
+      <p>🔗 Share this page:</p>
+      <a href="#" onclick="share()">Facebook</a>
+      <a href="#" onclick="share()">Twitter</a>
+      <a href="#" onclick="share()">WhatsApp</a>
+    </div>
+
+    <div class="footer">
+      👁️ Visitors: <span id="visitorCount">Loading...</span><br />
+      Built with purpose. 100% of donations go directly.
+    </div>
   </div>
 
   <script>
-    function copyAddress() {
-      const address = document.getElementById("btcAddress").innerText;
-      navigator.clipboard.writeText(address).then(() => {
-        document.getElementById("copyMsg").innerText = "✅ Address copied to clipboard!";
-        setTimeout(() => {
-          document.getElementById("copyMsg").innerText = "";
-        }, 3000);
-      });
-    }
-
     const translations = {
       en: {
-        title: "People in Gaza need your help",
-        message: "Every satoshi makes a difference. Your support helps save lives. Please donate what you can today.",
-        btcTitle: "Bitcoin Donation Address:",
-        copyBtn: "📋 Copy Wallet Address",
-        thankYou: "❤️ Thank you for supporting Gaza."
+        title: "People in Gaza Need Your Help",
+        message: "Your donation can make a difference. Every satoshi counts.",
+        copyMsg: "✅ Address copied to clipboard!",
+        thankYou: "❤️ Thank you for your kindness.",
+        copyBtn: "📋 Copy Wallet Address"
       },
       ar: {
-        title: "أهل غزة بحاجة إلى مساعدتك",
-        message: "كل ساتوشي يحدث فرقاً. دعمك يساعد في إنقاذ الأرواح. الرجاء التبرع بما تستطيع.",
-        btcTitle: "عنوان التبرع بالبيتكوين:",
-        copyBtn: "📋 انسخ عنوان المحفظة",
-        thankYou: "❤️ شكراً لدعمك غزة."
+        title: "الناس في غزة بحاجة إلى مساعدتك",
+        message: "تبرعك يمكن أن يحدث فرقًا. كل ساتوشي مهم.",
+        copyMsg: "✅ تم نسخ العنوان!",
+        thankYou: "❤️ شكرًا لك على لطفك.",
+        copyBtn: "📋 نسخ عنوان المحفظة"
       },
       fr: {
-        title: "Les habitants de Gaza ont besoin de votre aide",
-        message: "Chaque satoshi compte. Votre soutien sauve des vies. Merci de donner ce que vous pouvez.",
-        btcTitle: "Adresse de don Bitcoin :",
-        copyBtn: "📋 Copier l’adresse du portefeuille",
-        thankYou: "❤️ Merci pour votre soutien à Gaza."
+        title: "Les gens à Gaza ont besoin de votre aide",
+        message: "Votre don peut faire la différence. Chaque satoshi compte.",
+        copyMsg: "✅ Adresse copiée !",
+        thankYou: "❤️ Merci pour votre gentillesse.",
+        copyBtn: "📋 Copier l'adresse Bitcoin"
       },
       es: {
         title: "La gente en Gaza necesita tu ayuda",
-        message: "Cada satoshi marca la diferencia. Tu apoyo salva vidas. Por favor dona lo que puedas hoy.",
-        btcTitle: "Dirección de donación de Bitcoin:",
-        copyBtn: "📋 Copiar dirección de la billetera",
-        thankYou: "❤️ Gracias por apoyar…
+        message: "Tu donación puede marcar la diferencia.…

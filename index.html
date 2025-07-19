@@ -2,66 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The People of Gaza Need Your Help</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate with Bitcoin</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #111, #222);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      padding: 40px;
+      padding: 2rem 1rem;
     }
+
     h1 {
-      color: #b30000;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
+
     p {
-      font-size: 18px;
-      max-width: 700px;
-      margin: 20px auto;
+      max-width: 500px;
+      margin: 0.5rem 0 1.5rem;
+      font-size: 1.1rem;
     }
-    .wallet {
-      margin-top: 30px;
-      font-weight: bold;
-      word-wrap: break-word;
+
+    .address-box {
+      background: #333;
+      padding: 1rem;
+      border-radius: 10px;
+      word-break: break-all;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
     }
-    .qr {
-      margin: 20px 0;
+
+    .copy-btn {
+      background: #0f62fe;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
     }
+
+    .copy-msg {
+      margin-top: 0.5rem;
+      color: #4caf50;
+      font-size: 0.9rem;
+      min-height: 1rem;
+    }
+
+    .stats {
+      margin-top: 2rem;
+      background: #1e1e1e;
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .stats p {
+      margin: 0.5rem 0;
+    }
+
     footer {
-      margin-top: 50px;
-      font-size: 14px;
-      color: #888;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #999;
     }
   </style>
 </head>
 <body>
+  <h1>📬 Donate securely with Bitcoin</h1>
+  <p>Every satoshi you send bypasses restrictions and becomes real help, fast.</p>
 
-  <h1>The People of Gaza Need Your Help</h1>
+  <div class="address-box" id="btcAddress">bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</div>
+  <button class="copy-btn" onclick="copyAddress()">Copy Wallet Address</button>
+  <div class="copy-msg" id="copyMsg"></div>
 
-  <p>
-    Every day in Gaza, families struggle to survive under devastating conditions — lacking food, clean water, shelter, and safety.
-    <br><br>
-    Children are going to sleep hungry. Mothers are praying for medical care. Entire communities are caught in the crossfire of circumstances they cannot control.
-    <br><br>
-    Your donation, no matter how small, can make a real difference.
-    <br><br>
-    100% of all contributions go toward relief efforts, helping provide essential resources, hope, and dignity to those who need it most.
-    <br><br>
-    <strong>Stand with humanity. Stand with Gaza.</strong>
-  </p>
-
-  <div class="qr">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc&size=200x200" alt="Bitcoin QR Code">
+  <div class="stats">
+    <h2>📊 Live Bitcoin Donation Stats</h2>
+    <p><strong>💸 Total Received:</strong> <span id="totalReceived">Loading...</span></p>
+    <p><strong>💰 Current Balance:</strong> <span id="balance">Loading...</span></p>
+    <p><strong>🔁 Number of Transactions:</strong> <span id="txCount">Loading...</span></p>
+    <p id="error" style="color:red;"></p>
   </div>
 
-  <div class="wallet">
-    BTC Address: <br>
-    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
-  </div>
+  <footer>Built for good. No fees. 100% goes to help.</footer>
 
-  <footer>
-    Built for good. No fees, no middlemen — just direct help.
-  </footer>
+  <script>
+    function copyAddress() {
+      const address = document.getElementById("btcAddress").innerText;
+      navigator.clipboard.writeText(address).then(() => {
+        document.getElementById("copyMsg").innerText = "✅ Address copied to clipboard!";
+        setTimeout(() => {
+          document.getElementById("copyMsg").innerText = "";
+        }, 3000);
+      });
+    }
 
+    const btcAddress = "bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc";
+
+    async function fetchBTCStats() {
+      try {
+        const res = await fetch(https://blockstream.info/api/address/${btcAddress});
+        const data = await res.json();
+
+        const stats = data.chain_stats || {
+          funded_txo_sum: 0,
+          spent_txo_sum: 0,
+          tx_count: 0
+        };
+
+        const satsToBTC = s => (s / 1e8).toFixed(8);
+
+        const receivedBTC = satsToBTC(stats.funded_txo_sum);
+        const spentBTC = satsToBTC(stats.spent_txo_sum);
+        const balanceBTC = (parseFloat(receivedBTC) - parseFloat(spentBTC)).toFixed(8);
+        const txCount = stats.tx_count;
+
+        document.getElementById("totalReceived").innerText = receivedBTC + " BTC";
+        document.getElementById("balance").innerText = balanceBTC + " BTC";
+        document.getElementById("txCount").innerText = txCount;
+        document.getElementById("error").innerText = "";
+      } catch (error) {
+        console.error(error);
+        document.getElementById("totalReceived").innerText = "0 BTC";
+        document.getElementById("balance").innerText = "0 BTC";
+        document.getElementById("txCount").innerText = "0";
+        document.getElementById("error").innerText = ""; // Clean error message
+      }
+    }
+
+    fetchBTCStats();
+    setInterval(fetchBTCStats, 15000); // refresh every 15s
+  </script>
 </body>
 </html>

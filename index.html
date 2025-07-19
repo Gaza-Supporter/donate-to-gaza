@@ -19,34 +19,23 @@
       max-width: 700px;
       margin: 20px auto;
     }
+    .qr {
+      margin: 20px 0;
+    }
     .wallet {
       margin-top: 30px;
       font-weight: bold;
       word-wrap: break-word;
+      font-size: 16px;
     }
-    .qr {
-      margin: 20px 0;
+    .stats {
+      margin-top: 40px;
+      font-size: 16px;
     }
     footer {
       margin-top: 50px;
       font-size: 14px;
       color: #888;
-    }
-    .stats {
-      margin-top: 40px;
-      font-size: 18px;
-      background-color: #fff;
-      padding: 20px;
-      display: inline-block;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .stats div {
-      margin-bottom: 10px;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
     }
   </style>
 </head>
@@ -72,17 +61,15 @@
 
   <div class="wallet">
     BTC Address: <br>
-    <span id="btc-address">bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</span>
-    <br>
-    <button onclick="copyBTC()">📋 Copy Address</button>
+    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
   </div>
 
   <div class="stats">
     <h2>Live Donation Stats</h2>
-    <div>Total Received: <span id="totalReceived">Loading...</span></div>
-    <div>Current Balance: <span id="balance">Loading...</span></div>
-    <div>Transactions: <span id="txCount">Loading...</span></div>
-    <div class="error" id="error"></div>
+    <p>Total Received: <span id="totalReceived">Loading...</span></p>
+    <p>Current Balance: <span id="balance">Loading...</span></p>
+    <p>Transactions: <span id="txCount">Loading...</span></p>
+    <p id="error" style="color:red;"></p>
   </div>
 
   <footer>
@@ -91,46 +78,28 @@
 
   <script>
     const btcAddress = "bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc";
+    const apiUrl = https://mempool.space/api/address/${btcAddress};
+    const proxyUrl = https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)};
 
-    async function fetchBTCStats() {
-      try {
-        const res = await fetch(https://corsproxy.io/?https://blockstream.info/api/address/${btcAddress});
-        const data = await res.json();
+    fetch(proxyUrl)
+      .then(response => response.json())
+      .then(data => {
+        const parsedData = JSON.parse(data.contents);
+        const received = (parsedData.chain_stats.funded_txo_sum / 1e8).toFixed(8);
+        const balance = ((parsedData.chain_stats.funded_txo_sum - parsedData.chain_stats.spent_txo_sum) / 1e8).toFixed(8);
+        const txCount = parsedData.chain_stats.tx_count;
 
-        const stats = data.chain_stats || {
-          funded_txo_sum: 0,
-          spent_txo_sum: 0,
-          tx_count: 0
-        };
-
-        const satsToBTC = s => (s / 1e8).toFixed(8);
-
-        const receivedBTC = satsToBTC(stats.funded_txo_sum);
-        const spentBTC = satsToBTC(stats.spent_txo_sum);
-        const balanceBTC = (parseFloat(receivedBTC) - parseFloat(spentBTC)).toFixed(8);
-        const txCount = stats.tx_count;
-
-        document.getElementById("totalReceived").innerText = receivedBTC + " BTC";
-        document.getElementById("balance").innerText = balanceBTC + " BTC";
+        document.getElementById("totalReceived").innerText = ${received} BTC;
+        document.getElementById("balance").innerText = ${balance} BTC;
         document.getElementById("txCount").innerText = txCount;
-        document.getElementById("error").innerText = "";
-      } catch (error) {
+      })
+      .catch(error => {
+        console.error("Error fetching Bitcoin stats:", error);
         document.getElementById("error").innerText = "Unable to load live stats at the moment.";
         document.getElementById("totalReceived").innerText = "0 BTC";
         document.getElementById("balance").innerText = "0 BTC";
         document.getElementById("txCount").innerText = "0";
-      }
-    }
-
-    function copyBTC() {
-      const text = document.getElementById("btc-address").innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert("Bitcoin address copied!");
       });
-    }
-
-    fetchBTCStats();
-    setInterval(fetchBTCStats, 15000); // refresh every 15 seconds
   </script>
 
 </body>

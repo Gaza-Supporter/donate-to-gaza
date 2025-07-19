@@ -2,108 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Donate with Bitcoin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The People of Gaza Need Your Help</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #111, #222);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 40px;
+      color: #222;
     }
-
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
+      color: #b30000;
+      margin-bottom: 20px;
     }
-
     p {
-      max-width: 500px;
-      margin: 0.5rem 0 1.5rem;
-      font-size: 1.1rem;
+      font-size: 18px;
+      max-width: 700px;
+      margin: 20px auto;
+      line-height: 1.6;
     }
-
-    .address-box {
-      background: #333;
-      padding: 1rem;
-      border-radius: 10px;
-      word-break: break-all;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+    .wallet {
+      margin-top: 30px;
+      font-weight: bold;
+      word-wrap: break-word;
+      font-size: 18px;
     }
-
-    .copy-btn {
-      background: #0f62fe;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
+    .qr {
+      margin: 20px 0;
     }
-
-    .copy-msg {
-      margin-top: 0.5rem;
-      color: #4caf50;
-      font-size: 0.9rem;
-      min-height: 1rem;
-    }
-
     .stats {
-      margin-top: 2rem;
-      background: #1e1e1e;
-      padding: 1rem;
+      background: #fff;
+      margin-top: 30px;
+      padding: 20px;
       border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       max-width: 400px;
-      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     .stats p {
-      margin: 0.5rem 0;
+      margin: 10px 0;
+      font-size: 16px;
     }
-
     footer {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #999;
+      margin-top: 50px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>📬 Donate securely with Bitcoin</h1>
-  <p>Every satoshi you send bypasses restrictions and becomes real help, fast.</p>
 
-  <div class="address-box" id="btcAddress">bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc</div>
-  <button class="copy-btn" onclick="copyAddress()">Copy Wallet Address</button>
-  <div class="copy-msg" id="copyMsg"></div>
+  <h1>The People of Gaza Need Your Help</h1>
+
+  <p>
+    Every day in Gaza, families struggle to survive under devastating conditions — lacking food, clean water, shelter, and safety.
+    <br><br>
+    Children are going to sleep hungry. Mothers are praying for medical care. Entire communities are caught in the crossfire of circumstances they cannot control.
+    <br><br>
+    Your donation, no matter how small, can make a real difference.
+    <br><br>
+    100% of all contributions go toward relief efforts, helping provide essential resources, hope, and dignity to those who need it most.
+    <br><br>
+    <strong>Stand with humanity. Stand with Gaza.</strong>
+  </p>
+
+  <div class="qr">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin:bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc&size=200x200" alt="Bitcoin QR Code">
+  </div>
+
+  <div class="wallet">
+    BTC Address: <br>
+    bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
+  </div>
 
   <div class="stats">
-    <h2>📊 Live Bitcoin Donation Stats</h2>
-    <p><strong>💸 Total Received:</strong> <span id="totalReceived">Loading...</span></p>
-    <p><strong>💰 Current Balance:</strong> <span id="balance">Loading...</span></p>
-    <p><strong>🔁 Number of Transactions:</strong> <span id="txCount">Loading...</span></p>
+    <h2>Live Donation Stats</h2>
+    <p><strong>Total Received:</strong> <span id="totalReceived">Loading...</span></p>
+    <p><strong>Current Balance:</strong> <span id="balance">Loading...</span></p>
+    <p><strong>Transactions:</strong> <span id="txCount">Loading...</span></p>
     <p id="error" style="color:red;"></p>
   </div>
 
-  <footer>Built for good. No fees. 100% goes to help.</footer>
+  <footer>
+    Built for good. No fees, no middlemen — just direct help.
+  </footer>
 
   <script>
-    function copyAddress() {
-      const address = document.getElementById("btcAddress").innerText;
-      navigator.clipboard.writeText(address).then(() => {
-        document.getElementById("copyMsg").innerText = "✅ Address copied to clipboard!";
-        setTimeout(() => {
-          document.getElementById("copyMsg").innerText = "";
-        }, 3000);
-      });
-    }
-
     const btcAddress = "bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc";
 
     async function fetchBTCStats() {
@@ -129,16 +115,16 @@
         document.getElementById("txCount").innerText = txCount;
         document.getElementById("error").innerText = "";
       } catch (error) {
-        console.error(error);
+        document.getElementById("error").innerText = "Unable to load live stats at the moment.";
         document.getElementById("totalReceived").innerText = "0 BTC";
         document.getElementById("balance").innerText = "0 BTC";
         document.getElementById("txCount").innerText = "0";
-        document.getElementById("error").innerText = ""; // Clean error message
       }
     }
 
     fetchBTCStats();
-    setInterval(fetchBTCStats, 15000); // refresh every 15s
+    setInterval(fetchBTCStats, 15000); // refresh every 15 seconds
   </script>
+
 </body>
 </html>

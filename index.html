@@ -73,6 +73,33 @@
     BTC Address:<br>
     bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc
   </div>
+  <div id="btc-stats" style="margin-top: 30px; font-family: sans-serif;">
+  <p><strong>📊 Live Bitcoin Donation Stats:</strong></p>
+  <p>💸 Total Received: <span id="total-received">Loading...</span></p>
+  <p>💰 Current Balance: <span id="balance">Loading...</span></p>
+  <p>🔁 Number of Transactions: <span id="tx-count">Loading...</span></p>
+</div>
+
+<script>
+  async function getBitcoinStats() {
+    const address = "bc1q7t7ydhnnaakx8hv6np8sw54yt0s44g7scy62lc";
+    try {
+      const response = await fetch(https://blockstream.info/api/address/${address});
+      const data = await response.json();
+      const totalReceivedBTC = (data.chain_stats.funded_txo_sum / 100000000).toFixed(8);
+      const balanceBTC = (data.chain_stats.balance / 100000000).toFixed(8);
+      const txCount = data.chain_stats.tx_count;
+
+      document.getElementById("total-received").textContent = totalReceivedBTC + " BTC";
+      document.getElementById("balance").textContent = balanceBTC + " BTC";
+      document.getElementById("tx-count").textContent = txCount;
+    } catch (e) {
+      document.getElementById("btc-stats").innerHTML = "<p>⚠️ Unable to fetch live donation data. Please try again later.</p>";
+    }
+  }
+
+  getBitcoinStats();
+</script>
 
   <div style="margin-top: 30px;">
   <p style="font-weight: bold;">Share this page:</p>

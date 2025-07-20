@@ -1,5 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><style>
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .share-buttons a {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  .whatsapp { background: #25D366; }
+  .facebook { background: #3b5998; }
+  .twitter { background: #1DA1F2; }
+  .telegram { background: #0088cc; }
+  .email { background: #555; }
+  .share-buttons a:hover {
+    opacity: 0.8;
+  }
+</style>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -166,39 +190,12 @@
       </p>
     </div>
 
-   <div style="margin-top: 40px;">
-  <h2 style="color: #ffcccc;">Share & Support</h2>
-  <p>Spread the word. Every share helps amplify the cause 🇵🇸</p>
-  
-  <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
-    <!-- WhatsApp -->
-    <a href="https://wa.me/?text=Support%20Gaza%20now%20🇵🇸%20Donate%20securely%20via%20Bitcoin%3A%20https%3A%2F%2Fgaza-supporter.github.io%2Fdonate-to-gaza%2F" 
-       target="_blank" 
-       style="background-color: #25D366; padding: 10px 20px; border-radius: 5px; color: white; text-decoration: none;">
-      Share on WhatsApp
-    </a>
-
-    <!-- Twitter/X -->
-    <a href="https://twitter.com/intent/tweet?text=Support%20Gaza%20now%20🇵🇸%20Donate%20securely%20via%20Bitcoin%3A%20https%3A%2F%2Fgaza-supporter.github.io%2Fdonate-to-gaza%2F" 
-       target="_blank" 
-       style="background-color: #1DA1F2; padding: 10px 20px; border-radius: 5px; color: white; text-decoration: none;">
-      Share on Twitter
-    </a>
-
-    <!-- Facebook -->
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgaza-supporter.github.io%2Fdonate-to-gaza%2F" 
-       target="_blank" 
-       style="background-color: #1877F2; padding: 10px 20px; border-radius: 5px; color: white; text-decoration: none;">
-      Share on Facebook
-    </a>
-
-    <!-- Telegram -->
-    <a href="https://t.me/share/url?url=https%3A%2F%2Fgaza-supporter.github.io%2Fdonate-to-gaza%2F&text=Support%20Gaza%20now%20🇵🇸%20Donate%20securely%20via%20Bitcoin" 
-       target="_blank" 
-       style="background-color: #0088cc; padding: 10px 20px; border-radius: 5px; color: white; text-decoration: none;">
-      Share on Telegram
-    </a>
-  </div>
+  <div class="share-buttons">
+  <a class="whatsapp" href="https://wa.me/?text=Support%20Gaza%20Now%3A%20https%3A%2F%2Fdonatetogaza.netlify.app" target="_blank">Share on WhatsApp</a>
+  <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://donatetogaza.netlify.app" target="_blank">Share on Facebook</a>
+  <a class="twitter" href="https://twitter.com/intent/tweet?text=Support%20Gaza%20Now%20https://donatetogaza.netlify.app" target="_blank">Share on Twitter</a>
+  <a class="telegram" href="https://t.me/share/url?url=https://donatetogaza.netlify.app&text=Support%20Gaza%20Now" target="_blank">Share on Telegram</a>
+  <a class="email" href="mailto:?subject=Support Gaza&body=Please consider helping: https://donatetogaza.netlify.app" target="_blank">Share via Email</a>
 </div>
 
     <footer>
